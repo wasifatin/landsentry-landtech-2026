@@ -67,9 +67,13 @@ function switchTab(tabId) {
     });
   }
 
-  // Close mobile drawer if open
-  if (appSidebar && window.innerWidth <= 900) {
+  // Close mobile drawer and overlay if open
+  if (appSidebar) {
     appSidebar.classList.remove('mobile-open');
+  }
+  const overlay = document.getElementById('sidebarOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
   }
 
   // Render view
@@ -1821,11 +1825,36 @@ function initEvents() {
     btnReplaySplash.addEventListener('click', showSplashAnimation);
   }
 
-  // Mobile drawer toggle
-  if (mobileMenuBtn && appSidebar) {
+  // Mobile drawer toggle & overlay
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const sidebarMobileCloseBtn = document.getElementById('sidebarMobileCloseBtn');
+
+  function openMobileNav() {
+    if (appSidebar) appSidebar.classList.add('mobile-open');
+    if (sidebarOverlay) sidebarOverlay.classList.add('active');
+  }
+
+  function closeMobileNav() {
+    if (appSidebar) appSidebar.classList.remove('mobile-open');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+  }
+
+  if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
-      appSidebar.classList.toggle('mobile-open');
+      if (appSidebar && appSidebar.classList.contains('mobile-open')) {
+        closeMobileNav();
+      } else {
+        openMobileNav();
+      }
     });
+  }
+
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeMobileNav);
+  }
+
+  if (sidebarMobileCloseBtn) {
+    sidebarMobileCloseBtn.addEventListener('click', closeMobileNav);
   }
 
   // Global search input

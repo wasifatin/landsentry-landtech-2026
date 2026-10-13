@@ -105,6 +105,9 @@
     </button>
   </div>
 
+  <!-- Sidebar Mobile Backdrop Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
   <!-- =====================================================================
        LEFT COLLAPSIBLE SIDEBAR NAVIGATION
        ===================================================================== -->
@@ -116,6 +119,8 @@
         <div class="sidebar-brand-title">জমিGuard <span>AI</span></div>
         <div class="sidebar-brand-sub">LandTech 2026 • P3</div>
       </div>
+      <!-- Mobile Close Button -->
+      <button id="sidebarMobileCloseBtn" class="mobile-close-btn" title="Close Menu">✕</button>
     </div>
 
     <!-- Navigation Menu Items -->
@@ -183,36 +188,37 @@
        ===================================================================== -->
   <header class="topbar" id="appTopbar">
     <!-- Left: Status Badge & Mobile Toggle -->
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <button id="mobileMenuBtn" style="display: none; background: transparent; border: none; font-size: 20px; color: var(--text-primary); cursor: pointer;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button id="mobileMenuBtn" class="mobile-menu-btn" title="Open Navigation Menu">
         ☰
       </button>
-      <div style="display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); padding: 5px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10b981;">
+      <div class="topbar-status-badge">
         <span class="status-pulse-dot pulse-emerald"></span>
-        <span>DEMO SANDBOX (SYNTHETIC ONLY)</span>
+        <span class="status-text-full">DEMO SANDBOX (SYNTHETIC)</span>
+        <span class="status-text-short">DEMO</span>
       </div>
-      <button id="btnReplaySplash" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" title="Replay Opening Animation">
-        🎬 Intro
+      <button id="btnReplaySplash" class="btn-secondary intro-badge-btn" title="Replay Opening Animation">
+        🎬 <span class="intro-btn-label">Intro</span>
       </button>
     </div>
 
     <!-- Right: Persona Role, Alerts Bell, Quick Actions -->
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
       <!-- Bell Notification -->
-      <button id="alertsBellBtn" style="background: var(--surface-1); border: 1px solid var(--border-subtle); color: var(--text-primary); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative;" title="Open Cases">
+      <button id="alertsBellBtn" class="alerts-bell-btn" title="Open Cases">
         🔔
-        <span id="navAlertCountBadge" style="position: absolute; top: -4px; right: -4px; background: var(--red-accent); color: #fff; font-size: 9px; font-weight: 800; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">5</span>
+        <span id="navAlertCountBadge" class="nav-alert-badge">5</span>
       </button>
 
       <!-- Reviewer Role Dropdown -->
-      <div style="display: flex; align-items: center; gap: 8px; background: var(--surface-1); border: 1px solid var(--border-subtle); padding: 4px 10px; border-radius: 8px;">
-        <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--gold-primary); color: #000; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center;">
+      <div class="role-selector-container">
+        <div class="role-avatar-circle">
           JG
         </div>
-        <select id="roleSelector" style="background: transparent; border: none; color: var(--text-primary); font-size: 11px; font-weight: 600; outline: none; cursor: pointer;">
-          <option value="Demo Sub-Registrar" style="background: var(--surface-1); color: var(--text-primary);">Demo Sub-Registrar</option>
-          <option value="Demo AC Land Officer" style="background: var(--surface-1); color: var(--text-primary);">Demo AC Land Officer</option>
-          <option value="Demo Land Auditor" style="background: var(--surface-1); color: var(--text-primary);">Demo Land Auditor</option>
+        <select id="roleSelector" class="role-select-input">
+          <option value="Demo Sub-Registrar">Demo Sub-Registrar</option>
+          <option value="Demo AC Land Officer">Demo AC Land Officer</option>
+          <option value="Demo Land Auditor">Demo Land Auditor</option>
         </select>
       </div>
     </div>
@@ -223,43 +229,45 @@
        ===================================================================== -->
   <main class="app-main" id="appMain">
     <!-- Persistent Demo Notice Bar -->
-    <div style="background: rgba(250, 195, 6, 0.08); border: 1px solid rgba(250, 195, 6, 0.25); border-radius: 10px; padding: 10px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--gold-primary); flex-wrap: wrap; gap: 10px;">
+    <div class="persistent-demo-banner">
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="font-weight: 800; font-size: 13px;">⚠️ DEMO NOTICE:</span>
         <span>Self-generated synthetic demonstration records only. Do not enter real personal data or upload genuine land documents. Detection scores are rule-based advisory triage signals, not legal determinations.</span>
       </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <span class="font-mono" style="font-size: 11px; color: var(--text-muted);">No Live Govt Portal Connection</span>
+      <div class="demo-banner-actions">
+        <span class="font-mono demo-banner-subtext">No Live Govt Portal Connection</span>
         <button id="bannerResetBtn" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;">Reset Seed Data</button>
       </div>
     </div>
 
     <!-- Header Section with Title & Search -->
-    <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
-      <div>
-        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">
+    <div class="header-breadcrumb-row">
+      <div class="header-titles">
+        <div class="header-track-label">
           LandTech 2026 / Track: Digital Land Records / Problem P3
         </div>
-        <h1 id="pageTitle" style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-heading);">
+        <h1 id="pageTitle" class="header-main-title">
           Land Fraud & Double-Selling Detection System
         </h1>
-        <p id="pageSubtitle" style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">
+        <p id="pageSubtitle" class="header-sub-title">
           Multi-registry reconciliation, document cryptographic fingerprinting, and rapid transfer velocity analysis
         </p>
       </div>
 
       <!-- Action & Search Bar -->
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="position: relative;">
-          <span style="position: absolute; left: 12px; top: 9px; color: var(--text-muted); font-size: 14px;">🔍</span>
+      <div class="header-action-controls">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
           <input type="text" id="globalSearchInput" class="search-bar-input font-mono" placeholder="Search parcel, deed, alias...">
         </div>
-        <button id="btnRunChecks" class="btn-gold">
-          ⚡ Run Demo Checks
-        </button>
-        <button id="btnLoadScenariosModal" class="btn-secondary">
-          📑 Scenarios (A–F)
-        </button>
+        <div class="header-buttons-row">
+          <button id="btnRunChecks" class="btn-gold" style="flex: 1; justify-content: center;">
+            ⚡ Run Checks
+          </button>
+          <button id="btnLoadScenariosModal" class="btn-secondary" style="flex: 1; justify-content: center;">
+            📑 Scenarios
+          </button>
+        </div>
       </div>
     </div>
 
