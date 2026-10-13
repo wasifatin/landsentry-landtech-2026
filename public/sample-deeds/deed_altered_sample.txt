@@ -1,0 +1,14 @@
+[DEMO SYNTHETIC DEED RECORD — LANDTECH 2026 P3]
+-------------------------------------------------------------
+DOCUMENT IDENTIFIER: DOC-SYN-002
+PARCEL REFERENCE: PARCEL-SYN-DH-003
+DISTRICT: Demo District Dhaka-West | MOUZA: Demo Mouza 02
+PLOT / DAG NO: 305 | KHATIAN REF: RS-612
+CONVEYED AREA: 18.0 Decimals (ALTERED: Reference record states 10.0 Decimals)
+SELLER ALIAS: SELLER-SYN-003
+BUYER ALIAS: BUYER-SYN-004
+DATE OF REGISTRATION: 2026-04-12
+SUB-REGISTRY: Demo Sub-Registry Office Mirpur
+STATUS: Tampered Test Copy (Hash Divergence Expected)
+-------------------------------------------------------------
+NOTICE: Synthetic demonstration document only. Contains no real personal or land data.
