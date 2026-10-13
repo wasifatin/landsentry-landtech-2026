@@ -15,39 +15,62 @@ let searchQuery = '';
 let selectedParcelId = null;
 let selectedAlertId = null;
 let activeDocId = 'doc-001';
+let isSidebarCollapsed = false;
+let currentTheme = 'dark';
 
 // DOM Elements
 const tabContainer = document.getElementById('tabContentContainer');
 const pageTitle = document.getElementById('pageTitle');
 const pageSubtitle = document.getElementById('pageSubtitle');
-const mainNav = document.getElementById('mainNav');
+const sidebarNav = document.getElementById('sidebarNav');
+const appSidebar = document.getElementById('appSidebar');
+const appTopbar = document.getElementById('appTopbar');
+const appMain = document.getElementById('appMain');
 const navAlertCountBadge = document.getElementById('navAlertCountBadge');
+const sidebarAlertBadge = document.getElementById('sidebarAlertBadge');
+const btnSidebarCollapse = document.getElementById('btnSidebarCollapse');
+const collapseToggleIcon = document.getElementById('collapseToggleIcon');
+const collapseToggleLabel = document.getElementById('collapseToggleLabel');
+const btnThemeToggle = document.getElementById('btnThemeToggle');
+const themeToggleIcon = document.getElementById('themeToggleIcon');
+const themeToggleLabel = document.getElementById('themeToggleLabel');
 const roleSelector = document.getElementById('roleSelector');
 const globalSearchInput = document.getElementById('globalSearchInput');
 const btnRunChecks = document.getElementById('btnRunChecks');
 const btnLoadScenariosModal = document.getElementById('btnLoadScenariosModal');
 const bannerResetBtn = document.getElementById('bannerResetBtn');
 const modalContainer = document.getElementById('modalContainer');
+const introSplash = document.getElementById('introSplash');
+const btnSkipIntro = document.getElementById('btnSkipIntro');
+const btnReplaySplash = document.getElementById('btnReplaySplash');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 
 // Update alert badge count
 function updateBadge() {
   const alerts = repo.getAlerts().filter(a => a.status === 'New' || a.status === 'Under Review');
-  if (navAlertCountBadge) {
-    navAlertCountBadge.textContent = alerts.length.toString();
-  }
+  const countStr = alerts.length.toString();
+  if (navAlertCountBadge) navAlertCountBadge.textContent = countStr;
+  if (sidebarAlertBadge) sidebarAlertBadge.textContent = countStr;
 }
 
 // Navigation Tab Switcher
 function switchTab(tabId) {
   currentTab = tabId;
-  const buttons = mainNav.querySelectorAll('.nav-btn');
-  buttons.forEach(btn => {
-    if (btn.getAttribute('data-tab') === tabId) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
+  if (sidebarNav) {
+    const buttons = sidebarNav.querySelectorAll('.sidebar-btn');
+    buttons.forEach(btn => {
+      if (btn.getAttribute('data-tab') === tabId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Close mobile drawer if open
+  if (appSidebar && window.innerWidth <= 900) {
+    appSidebar.classList.remove('mobile-open');
+  }
 
   // Render view
   renderView();
@@ -1677,19 +1700,133 @@ function openScenariosModal() {
   `;
 }
 
+// Sidebar Collapse / Expand Toggle
+function toggleSidebar(forceState) {
+  isSidebarCollapsed = typeof forceState === 'boolean' ? forceState : !isSidebarCollapsed;
+  
+  if (appSidebar) {
+    if (isSidebarCollapsed) {
+      appSidebar.classList.add('collapsed');
+    } else {
+      appSidebar.classList.remove('collapsed');
+    }
+  }
+
+  if (appTopbar) {
+    if (isSidebarCollapsed) {
+      appTopbar.classList.add('sidebar-collapsed');
+    } else {
+      appTopbar.classList.remove('sidebar-collapsed');
+    }
+  }
+
+  if (appMain) {
+    if (isSidebarCollapsed) {
+      appMain.classList.add('sidebar-collapsed');
+    } else {
+      appMain.classList.remove('sidebar-collapsed');
+    }
+  }
+
+  if (collapseToggleIcon) collapseToggleIcon.textContent = isSidebarCollapsed ? '▶' : '◀';
+  if (collapseToggleLabel) collapseToggleLabel.textContent = isSidebarCollapsed ? 'Maximize' : 'Minimize Sidebar';
+
+  try {
+    localStorage.setItem('jomiguard_sidebar_collapsed', isSidebarCollapsed ? '1' : '0');
+  } catch (e) {}
+}
+
+// Light / Dark Mode Toggle
+function toggleTheme(targetTheme) {
+  if (targetTheme) {
+    currentTheme = targetTheme;
+  } else {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  }
+
+  document.body.setAttribute('data-theme', currentTheme);
+
+  if (themeToggleIcon) {
+    themeToggleIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  }
+  if (themeToggleLabel) {
+    themeToggleLabel.textContent = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  }
+
+  try {
+    localStorage.setItem('jomiguard_theme', currentTheme);
+  } catch (e) {}
+}
+
+// Cinematic Opening Splash Animation
+function showSplashAnimation() {
+  if (!introSplash) return;
+  introSplash.style.display = 'flex';
+  introSplash.classList.remove('fade-out');
+
+  // Automatically fade out after 2.4s
+  setTimeout(() => {
+    dismissSplashAnimation();
+  }, 2400);
+}
+
+function dismissSplashAnimation() {
+  if (!introSplash) return;
+  introSplash.classList.add('fade-out');
+  setTimeout(() => {
+    introSplash.style.display = 'none';
+  }, 700);
+}
+
 // Global window dispatcher
 window.appSwitchTab = switchTab;
+window.appToggleTheme = toggleTheme;
+window.appToggleSidebar = toggleSidebar;
+window.appReplaySplash = showSplashAnimation;
 
 // Event Listeners initialization
 function initEvents() {
-  // Navigation tabs
-  mainNav.addEventListener('click', (e) => {
-    const btn = e.target.closest('.nav-btn');
-    if (btn) {
-      const tab = btn.getAttribute('data-tab');
-      if (tab) switchTab(tab);
-    }
-  });
+  // Sidebar navigation click
+  if (sidebarNav) {
+    sidebarNav.addEventListener('click', (e) => {
+      const btn = e.target.closest('.sidebar-btn');
+      if (btn) {
+        const tab = btn.getAttribute('data-tab');
+        if (tab) switchTab(tab);
+      }
+    });
+  }
+
+  // Sidebar minimize / maximize toggle button
+  if (btnSidebarCollapse) {
+    btnSidebarCollapse.addEventListener('click', () => toggleSidebar());
+  }
+
+  // Logo click returns to overview
+  const sidebarLogo = document.getElementById('sidebarLogo');
+  if (sidebarLogo) {
+    sidebarLogo.addEventListener('click', () => switchTab('overview'));
+  }
+
+  // Theme toggle button
+  if (btnThemeToggle) {
+    btnThemeToggle.addEventListener('click', () => toggleTheme());
+  }
+
+  // Splash screen buttons
+  if (btnSkipIntro) {
+    btnSkipIntro.addEventListener('click', dismissSplashAnimation);
+  }
+  if (btnReplaySplash) {
+    btnReplaySplash.addEventListener('click', showSplashAnimation);
+  }
+
+  // Mobile drawer toggle
+  if (mobileMenuBtn && appSidebar) {
+    mobileMenuBtn.addEventListener('click', () => {
+      appSidebar.classList.toggle('mobile-open');
+    });
+  }
 
   // Global search input
   if (globalSearchInput) {
@@ -1742,10 +1879,22 @@ function initEvents() {
       window.appCloseModal();
     }
   });
+
+  // Load saved theme
+  try {
+    const savedTheme = localStorage.getItem('jomiguard_theme') || 'dark';
+    toggleTheme(savedTheme);
+
+    const savedSidebar = localStorage.getItem('jomiguard_sidebar_collapsed');
+    if (savedSidebar === '1') {
+      toggleSidebar(true);
+    }
+  } catch (e) {}
 }
 
 // Initial Boot
 document.addEventListener('DOMContentLoaded', () => {
   initEvents();
   renderView();
+  showSplashAnimation();
 });
