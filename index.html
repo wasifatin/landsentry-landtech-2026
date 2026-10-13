@@ -202,8 +202,14 @@
       </button>
     </div>
 
-    <!-- Right: Persona Role, Alerts Bell, Quick Actions -->
+    <!-- Right: Persona Role, Language Toggle, Alerts Bell, Quick Actions -->
     <div style="display: flex; align-items: center; gap: 10px;">
+      <!-- Language Toggle (Bangla / English) -->
+      <button id="btnLanguageToggle" class="language-toggle-btn" title="ভাষা পরিবর্তন করুন / Switch Language">
+        <span style="font-size: 14px;">🌐</span>
+        <span id="currentLangLabel">বাংলা</span>
+      </button>
+
       <!-- Bell Notification -->
       <button id="alertsBellBtn" class="alerts-bell-btn" title="Open Cases">
         🔔
@@ -216,9 +222,9 @@
           JG
         </div>
         <select id="roleSelector" class="role-select-input">
-          <option value="Demo Sub-Registrar">Demo Sub-Registrar</option>
-          <option value="Demo AC Land Officer">Demo AC Land Officer</option>
-          <option value="Demo Land Auditor">Demo Land Auditor</option>
+          <option value="Demo Sub-Registrar" id="roleOptSubReg">Demo Sub-Registrar</option>
+          <option value="Demo AC Land Officer" id="roleOptAcLand">Demo AC Land Officer</option>
+          <option value="Demo Land Auditor" id="roleOptAuditor">Demo Land Auditor</option>
         </select>
       </div>
     </div>
@@ -231,11 +237,11 @@
     <!-- Persistent Demo Notice Bar -->
     <div class="persistent-demo-banner">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="font-weight: 800; font-size: 13px;">⚠️ DEMO NOTICE:</span>
-        <span>Self-generated synthetic demonstration records only. Do not enter real personal data or upload genuine land documents. Detection scores are rule-based advisory triage signals (flagged for review), not legal determinations.</span>
+        <span id="bannerNoticeTitle" style="font-weight: 800; font-size: 13px;">⚠️ DEMO NOTICE:</span>
+        <span id="bannerNoticeBody">Self-generated synthetic demonstration records only. Do not enter real personal data or upload genuine land documents. Detection scores are rule-based advisory triage signals (flagged for review), not legal determinations.</span>
       </div>
       <div class="demo-banner-actions">
-        <span class="font-mono demo-banner-subtext">No Live Govt Portal Connection</span>
+        <span id="bannerSubtext" class="font-mono demo-banner-subtext">No Live Govt Portal Connection</span>
         <button id="bannerResetBtn" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;">Reset Seed Data</button>
       </div>
     </div>
@@ -243,7 +249,7 @@
     <!-- Header Section with Title & Search -->
     <div class="header-breadcrumb-row">
       <div class="header-titles">
-        <div class="header-track-label">
+        <div id="headerTrackLabel" class="header-track-label">
           LandTech 2026 / Track: Digital Land Records / Problem P3
         </div>
         <h1 id="pageTitle" class="header-main-title">
@@ -261,10 +267,10 @@
           <input type="text" id="globalSearchInput" class="search-bar-input font-mono" placeholder="Search parcel, deed, alias...">
         </div>
         <div class="header-buttons-row">
-          <button id="btnRunChecks" class="btn-gold" style="flex: 1; justify-content: center;">
+          <button id="btnRunChecks" class="btn-gold" style="flex: 1; justify-content: center; white-space: nowrap;">
             ⚡ Run Checks
           </button>
-          <button id="btnLoadScenariosModal" class="btn-secondary" style="flex: 1; justify-content: center;">
+          <button id="btnLoadScenariosModal" class="btn-secondary" style="flex: 1; justify-content: center; white-space: nowrap;">
             📑 Scenarios
           </button>
         </div>

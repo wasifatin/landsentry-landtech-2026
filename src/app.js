@@ -5,6 +5,7 @@
  */
 
 import { LandRepository, computeSha256 } from './repository/storage.js';
+import { getLanguage, setLanguage, t } from './i18n/translations.js';
 
 // Initialize repository
 const repo = new LandRepository();
@@ -34,6 +35,8 @@ const collapseToggleLabel = document.getElementById('collapseToggleLabel');
 const btnThemeToggle = document.getElementById('btnThemeToggle');
 const themeToggleIcon = document.getElementById('themeToggleIcon');
 const themeToggleLabel = document.getElementById('themeToggleLabel');
+const btnLanguageToggle = document.getElementById('btnLanguageToggle');
+const currentLangLabel = document.getElementById('currentLangLabel');
 const roleSelector = document.getElementById('roleSelector');
 const globalSearchInput = document.getElementById('globalSearchInput');
 const btnRunChecks = document.getElementById('btnRunChecks');
@@ -128,8 +131,8 @@ function formatDate(isoStr) {
 // 1. OVERVIEW DASHBOARD
 // ==========================================
 function renderOverviewDashboard() {
-  pageTitle.textContent = 'Land Fraud & Double-Selling Triage Center';
-  pageSubtitle.textContent = 'Multi-registry reconciliation, document cryptographic fingerprinting, and rapid transfer velocity analysis';
+  pageTitle.textContent = t('mainTitle', 'Land Fraud & Double-Selling Detection System');
+  pageSubtitle.textContent = t('mainSubtitle', 'Multi-registry reconciliation, document cryptographic fingerprinting, and rapid transfer velocity analysis');
 
   const parcels = repo.getParcels();
   const deeds = repo.getDeeds();
@@ -140,71 +143,83 @@ function renderOverviewDashboard() {
   tabContainer.innerHTML = `
     <!-- BENTO ENTITY GRID -->
     <div class="bento-grid">
-      <!-- Card 1 -->
+      <!-- Card 1: Parcels -->
       <div class="glass-panel" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
           <div class="icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🗺️</div>
-          <span class="font-mono" style="font-size: 11px; color: var(--zinc-500);">PARCELS</span>
+          <span class="font-mono" style="font-size: 11px; color: var(--zinc-400); font-weight: 700;">${t('kpiParcelsTitle', 'TOTAL PARCELS')}</span>
         </div>
-        <div style="font-size: 26px; font-weight: 800; color: #fff;">${parcels.length} Indexed</div>
-        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Synthetic plots in demo registry</div>
+        <div style="font-size: 26px; font-weight: 800; color: #fff;">${parcels.length} ${t('colStatus', 'Indexed')}</div>
+        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">${t('kpiParcelsSub', 'Synthetic plots in demo registry')}</div>
         <div class="tech-progress-container">
           <div class="tech-progress-fill fill-emerald" style="width: 100%;"></div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 11px;">
           <span style="color: var(--zinc-500);">4 Demo Mouzas</span>
-          <button class="nav-btn" style="padding: 0; color: var(--gold-primary);" onclick="window.appSwitchTab('parcels')">Explore Plots →</button>
+          <button class="nav-btn" onclick="window.appSwitchTab('parcels')" title="${t('btnExplorePlots', 'Explore Plots ➔')}">
+            <span>🗺️</span>
+            <span>${t('btnExplorePlots', 'Explore Plots ➔')}</span>
+          </button>
         </div>
       </div>
 
-      <!-- Card 2 -->
+      <!-- Card 2: Deeds -->
       <div class="glass-panel" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
           <div class="icon-box" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">📜</div>
-          <span class="font-mono" style="font-size: 11px; color: var(--zinc-500);">DEEDS CHECKED</span>
+          <span class="font-mono" style="font-size: 11px; color: var(--zinc-400); font-weight: 700;">${t('kpiDeedsTitle', 'REGISTERED DEEDS')}</span>
         </div>
-        <div style="font-size: 26px; font-weight: 800; color: #fff;">${deeds.length} Registered</div>
-        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Sub-Registry cross-matched</div>
+        <div style="font-size: 26px; font-weight: 800; color: #fff;">${deeds.length} ${t('statusNew', 'Registered')}</div>
+        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">${t('kpiDeedsSub', 'Sub-Registry cross-matched')}</div>
         <div class="tech-progress-container">
           <div class="tech-progress-fill fill-blue" style="width: 85%;"></div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 11px;">
-          <span style="color: var(--zinc-500);">100% Synthetic Aliases</span>
-          <button class="nav-btn" style="padding: 0; color: var(--gold-primary);" onclick="window.appSwitchTab('reconciliation')">Reconciliation →</button>
+          <span style="color: var(--zinc-500);">100% Synthetic</span>
+          <button class="nav-btn" onclick="window.appSwitchTab('reconciliation')" title="${t('btnReconciliation', 'Reconciliation ➔')}">
+            <span>🔄</span>
+            <span>${t('btnReconciliation', 'Reconciliation ➔')}</span>
+          </button>
         </div>
       </div>
 
-      <!-- Card 3 -->
+      <!-- Card 3: Open Alerts -->
       <div class="glass-panel" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
           <div class="icon-box" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">⚠️</div>
-          <span class="font-mono" style="font-size: 11px; color: var(--zinc-500);">OPEN ALERTS</span>
+          <span class="font-mono" style="font-size: 11px; color: var(--zinc-400); font-weight: 700;">${t('kpiAlertsTitle', 'OPEN ALERTS')}</span>
         </div>
         <div style="font-size: 26px; font-weight: 800; color: #fff;">${alerts.length} Flagged for Review</div>
-        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Cases flagged for review requiring triage</div>
+        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">${t('kpiAlertsSub', 'Cases flagged for review requiring triage')}</div>
         <div class="tech-progress-container">
           <div class="tech-progress-fill fill-gold" style="width: 75%;"></div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 11px;">
           <span style="color: var(--zinc-500);">Rule-Based Triage</span>
-          <button class="nav-btn" style="padding: 0; color: var(--gold-primary);" onclick="window.appSwitchTab('cases')">View Cases →</button>
+          <button class="nav-btn" onclick="window.appSwitchTab('cases')" title="${t('btnViewCases', 'View Cases ➔')}">
+            <span>📋</span>
+            <span>${t('btnViewCases', 'View Cases ➔')}</span>
+          </button>
         </div>
       </div>
 
-      <!-- Card 4 -->
+      <!-- Card 4: High Severity -->
       <div class="glass-panel" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
           <div class="icon-box" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">🚨</div>
-          <span class="font-mono" style="font-size: 11px; color: var(--zinc-500);">HIGH SEVERITY</span>
+          <span class="font-mono" style="font-size: 11px; color: var(--zinc-400); font-weight: 700;">${t('kpiHighRiskTitle', 'HIGH SEVERITY')}</span>
         </div>
         <div style="font-size: 26px; font-weight: 800; color: #f87171;">${highRisk.length} High-Risk</div>
-        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Possible duplicate / tampered</div>
+        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">${t('kpiHighRiskSub', 'Possible duplicate / tampered')}</div>
         <div class="tech-progress-container">
           <div class="tech-progress-fill fill-red" style="width: ${Math.min(100, highRisk.length * 35)}%;"></div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 11px;">
           <span style="color: var(--zinc-500);">Score >= 60 / 100</span>
-          <button class="nav-btn" style="padding: 0; color: var(--gold-primary);" onclick="window.appOpenHighRisk()">Prioritize →</button>
+          <button class="nav-btn" onclick="window.appOpenHighRisk()" title="${t('btnPrioritize', 'Prioritize ➔')}">
+            <span>🚨</span>
+            <span>${t('btnPrioritize', 'Prioritize ➔')}</span>
+          </button>
         </div>
       </div>
     </div>
@@ -219,7 +234,10 @@ function renderOverviewDashboard() {
             <p style="font-size: 12px; color: var(--zinc-400);">Calculated via deterministic weights (+40 Double-Selling, +25 Doc Hash, +20 Reg-Mutation, +15 Rapid, +10 Missing)</p>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button class="btn-secondary" onclick="window.appSwitchTab('cases')">View All Cases</button>
+            <button class="nav-btn" onclick="window.appSwitchTab('cases')">
+              <span>📋</span>
+              <span>${t('btnViewCases', 'View All Cases ➔')}</span>
+            </button>
           </div>
         </div>
 
@@ -334,7 +352,10 @@ function renderOverviewDashboard() {
             </div>
           </div>
           <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 12px; text-align: right;">
-            <button class="nav-btn" style="color: var(--gold-primary); font-size: 11px; padding: 0;" onclick="window.appSwitchTab('methodology')">Configure Weights →</button>
+            <button class="nav-btn" onclick="window.appSwitchTab('methodology')">
+              <span>⚙️</span>
+              <span>${t('btnConfigureWeights', 'Configure Weights ➔')}</span>
+            </button>
           </div>
         </div>
 
@@ -2016,6 +2037,15 @@ function initEvents() {
     });
   }
 
+  // Language Switcher
+  if (btnLanguageToggle) {
+    btnLanguageToggle.addEventListener('click', () => {
+      const nextLang = getLanguage() === 'en' ? 'bn' : 'en';
+      setLanguage(nextLang);
+      updateLanguageUI();
+    });
+  }
+
   // Close modal when clicking overlay background
   modalContainer.addEventListener('click', (e) => {
     if (e.target === modalContainer) {
@@ -2035,9 +2065,82 @@ function initEvents() {
   } catch (e) {}
 }
 
+export function updateLanguageUI() {
+  const lang = getLanguage();
+  if (currentLangLabel) {
+    currentLangLabel.textContent = lang === 'en' ? 'বাংলা' : 'English';
+  }
+
+  // Update persistent banner
+  const bannerNoticeTitle = document.getElementById('bannerNoticeTitle');
+  if (bannerNoticeTitle) bannerNoticeTitle.textContent = t('demoNoticeTitle');
+  const bannerNoticeBody = document.getElementById('bannerNoticeBody');
+  if (bannerNoticeBody) bannerNoticeBody.textContent = t('demoNoticeBody');
+  const bannerSubtext = document.getElementById('bannerSubtext');
+  if (bannerSubtext) bannerSubtext.textContent = t('noLiveGovt');
+  const bannerResetBtn = document.getElementById('bannerResetBtn');
+  if (bannerResetBtn) bannerResetBtn.textContent = t('resetSeedData');
+
+  // Topbar and Header
+  const headerTrackLabel = document.getElementById('headerTrackLabel');
+  if (headerTrackLabel) headerTrackLabel.textContent = t('trackLabel');
+  const btnRunChecks = document.getElementById('btnRunChecks');
+  if (btnRunChecks) btnRunChecks.textContent = t('runRecheck');
+  const btnLoadScenariosModal = document.getElementById('btnLoadScenariosModal');
+  if (btnLoadScenariosModal) btnLoadScenariosModal.textContent = t('loadScenarios');
+  const globalSearchInput = document.getElementById('globalSearchInput');
+  if (globalSearchInput) globalSearchInput.placeholder = t('searchPlaceholder');
+
+  // Intro splash motto
+  const introMottoEl = document.querySelector('.intro-motto');
+  if (introMottoEl) introMottoEl.textContent = t('introMotto');
+  if (btnSkipIntro) btnSkipIntro.textContent = t('enterDashboard');
+
+  // Roles in dropdown
+  const roleOptSubReg = document.getElementById('roleOptSubReg');
+  if (roleOptSubReg) roleOptSubReg.textContent = t('roleSubRegistrar');
+  const roleOptAcLand = document.getElementById('roleOptAcLand');
+  if (roleOptAcLand) roleOptAcLand.textContent = t('roleAcLand');
+  const roleOptAuditor = document.getElementById('roleOptAuditor');
+  if (roleOptAuditor) roleOptAuditor.textContent = t('roleAuditor');
+
+  // Sidebar navigation labels
+  const navMap = {
+    overview: 'navDashboard',
+    parcels: 'navParcels',
+    integrity: 'navIntegrity',
+    'double-selling': 'navDoubleSelling',
+    'rapid-transfers': 'navRapidTransfers',
+    reconciliation: 'navReconciliation',
+    cases: 'navCases',
+    methodology: 'navMethodology'
+  };
+
+  if (sidebarNav) {
+    const buttons = sidebarNav.querySelectorAll('.sidebar-btn');
+    buttons.forEach(btn => {
+      const tab = btn.getAttribute('data-tab');
+      const labelSpan = btn.querySelector('.sidebar-btn-label');
+      if (tab && labelSpan && navMap[tab]) {
+        labelSpan.textContent = t(navMap[tab]);
+      }
+    });
+  }
+
+  // Footer controls
+  if (themeToggleLabel) {
+    themeToggleLabel.textContent = currentTheme === 'dark' ? t('lightMode') : t('darkMode');
+  }
+  if (collapseToggleLabel) {
+    collapseToggleLabel.textContent = isSidebarCollapsed ? t('maximizeSidebar') : t('minimizeSidebar');
+  }
+
+  renderView();
+}
+
 // Initial Boot
 document.addEventListener('DOMContentLoaded', () => {
   initEvents();
-  renderView();
+  updateLanguageUI();
   showSplashAnimation();
 });
