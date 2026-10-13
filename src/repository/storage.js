@@ -322,10 +322,20 @@ export class LandRepository {
 }
 
 export async function computeSha256(text) {
-  if (typeof window !== 'undefined' && window.crypto && window.crypto.subtle) {
+  let subtle = (typeof window !== 'undefined' && window.crypto?.subtle) ||
+               (typeof globalThis !== 'undefined' && globalThis.crypto?.subtle);
+
+  if (!subtle && typeof process !== 'undefined') {
+    try {
+      const nodeCrypto = await import('crypto');
+      subtle = nodeCrypto.webcrypto?.subtle;
+    } catch (e) {}
+  }
+
+  if (subtle) {
     try {
       const msgUint8 = new TextEncoder().encode(text);
-      const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
+      const hashBuffer = await subtle.digest('SHA-256', msgUint8);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     } catch (e) {

@@ -180,8 +180,8 @@ function renderOverviewDashboard() {
           <div class="icon-box" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">⚠️</div>
           <span class="font-mono" style="font-size: 11px; color: var(--zinc-500);">OPEN ALERTS</span>
         </div>
-        <div style="font-size: 26px; font-weight: 800; color: #fff;">${alerts.length} Flagged</div>
-        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Requiring human verification</div>
+        <div style="font-size: 26px; font-weight: 800; color: #fff;">${alerts.length} Flagged for Review</div>
+        <div style="font-size: 12px; color: var(--zinc-400); margin: 4px 0 14px 0;">Cases flagged for review requiring triage</div>
         <div class="tech-progress-container">
           <div class="tech-progress-fill fill-gold" style="width: 75%;"></div>
         </div>
@@ -1545,6 +1545,112 @@ function renderMethodologySettings() {
       </div>
     </div>
 
+    <!-- CONFIGURABLE HEURISTIC WEIGHTS & THRESHOLDS (PRD Section 7) -->
+    <div class="glass-panel-static" style="padding: 24px; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+        <div>
+          <h3 style="font-size: 17px; font-weight: 700; color: #fff;">Configurable Detection Weights & Demonstration Thresholds</h3>
+          <p style="font-size: 12px; color: var(--zinc-400);">Illustrative prototype weights (capped at 100). Explicitly not an official or legal standard.</p>
+        </div>
+        <span class="badge badge-gold font-mono">DETERMINISTIC ENGINE</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Possible Double-Selling Weight</label>
+            <span class="font-mono font-bold" style="color: #f87171;">+${settings.weightDoubleSelling}</span>
+          </div>
+          <input type="range" min="10" max="60" step="5" value="${settings.weightDoubleSelling}" 
+                 onchange="window.appUpdateWeight('weightDoubleSelling', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">PRD baseline default: +40</div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Document Hash Mismatch Weight</label>
+            <span class="font-mono font-bold" style="color: #fbbf24;">+${settings.weightDocumentIntegrity}</span>
+          </div>
+          <input type="range" min="10" max="50" step="5" value="${settings.weightDocumentIntegrity}" 
+                 onchange="window.appUpdateWeight('weightDocumentIntegrity', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">PRD baseline default: +25</div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Registration/Mutation Mismatch</label>
+            <span class="font-mono font-bold" style="color: #60a5fa;">+${settings.weightRegMutationMismatch}</span>
+          </div>
+          <input type="range" min="10" max="40" step="5" value="${settings.weightRegMutationMismatch}" 
+                 onchange="window.appUpdateWeight('weightRegMutationMismatch', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">PRD baseline default: +20</div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Rapid Transfer Pattern Weight</label>
+            <span class="font-mono font-bold" style="color: #a78bfa;">+${settings.weightRapidTransfer}</span>
+          </div>
+          <input type="range" min="5" max="30" step="5" value="${settings.weightRapidTransfer}" 
+                 onchange="window.appUpdateWeight('weightRapidTransfer', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">PRD baseline default: +15</div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Rapid Transfer Threshold</label>
+            <span class="font-mono font-bold" style="color: #38bdf8;">${settings.rapidTransferCountThreshold} transfers</span>
+          </div>
+          <input type="range" min="2" max="6" step="1" value="${settings.rapidTransferCountThreshold}" 
+                 onchange="window.appUpdateWeight('rapidTransferCountThreshold', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">Default: 3 transfers in ${settings.rapidTransferWindowDays} days</div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <label style="font-size: 12px; font-weight: 700; color: #fff;">Missing Critical Field Weight</label>
+            <span class="font-mono font-bold" style="color: #34d399;">+${settings.weightMissingFields}</span>
+          </div>
+          <input type="range" min="5" max="25" step="5" value="${settings.weightMissingFields}" 
+                 onchange="window.appUpdateWeight('weightMissingFields', this.value)" style="width: 100%;">
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">PRD baseline default: +10</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRD ETHICAL SAFEGUARDS & NON-GOALS (PRD Section 3 & Section 7.1) -->
+    <div class="glass-panel-static" style="padding: 24px; margin-bottom: 24px;">
+      <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px;">
+        Methodology & Non-Goals Architecture
+      </h3>
+      <p style="font-size: 12px; color: var(--zinc-400); margin-bottom: 16px;">
+        Core non-negotiable boundaries defined by the LandTech 2026 Rule Book and PRD:
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border-left: 3px solid #ef4444;">
+          <div style="font-size: 12px; font-weight: 800; color: #f87171;">🚫 No Legal Adjudication</div>
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">
+            Never determines legal ownership or declares fraud proven. All signals are flags for review requiring authorized human investigation.
+          </div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border-left: 3px solid #f59e0b;">
+          <div style="font-size: 12px; font-weight: 800; color: #fbbf24;">🚫 No Black-Box LLM Scoring</div>
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">
+            The risk engine is 100% deterministic, transparent and unit-testable. LLMs are not used as opaque scoring authorities.
+          </div>
+        </div>
+
+        <div style="background: var(--surface-1); padding: 14px; border-radius: 8px; border-left: 3px solid #10b981;">
+          <div style="font-size: 12px; font-weight: 800; color: #34d399;">🚫 No Live Government Scraping</div>
+          <div style="font-size: 11px; color: var(--zinc-400); margin-top: 4px;">
+            Zero external connections to live land portals (ePorcha, DLRS, etc.). Completely offline synthetic demonstrator.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Export & Data Management -->
     <div class="glass-panel-static" style="padding: 24px;">
       <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px;">
@@ -1568,6 +1674,14 @@ function renderMethodologySettings() {
     </div>
   `;
 }
+
+window.appUpdateWeight = function(key, val) {
+  const updateObj = {};
+  updateObj[key] = parseInt(val, 10);
+  repo.updateSettings(updateObj);
+  repo.recalculateAllAlerts();
+  renderMethodologySettings();
+};
 
 // Scenario Quick Load Dispatcher
 window.appLoadScenario = function(letter) {

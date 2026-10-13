@@ -450,7 +450,7 @@ export const SEED_FINGERPRINTS = [
     referenceSha256: '3e82cb536f036a2ccc1170081fca9c071b3f6858baa3c04e0360d124eaf12053',
     observedSha256: 'fa8d6b3cf54f912138904bc365cd875e28195e0ba98c70538357b20368017295',
     integrityStatus: 'MISMATCH',
-    notes: 'Observed content hash differs from reference archive fingerprint (Area field altered from 10.0 to 18.0).',
+    notes: 'Observed content hash differs from reference archive fingerprint (Area field altered from 10.0 to 18.0). Note: Cryptographic hash comparison checks against stored reference only; does not prove legal validity or ownership.',
     tamperSimulated: true
   },
   {
