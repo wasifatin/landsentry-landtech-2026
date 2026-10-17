@@ -263,8 +263,8 @@ LandSentry's implemented risk engine is deterministic and rule-based. It does no
 
 AI tools used during development must be disclosed accurately. Complete the following list with every tool actually used by the team:
 
-- **ChatGPT (OpenAI):** [Describe the actual use, such as planning, documentation, code explanation, debugging assistance, or review, only where applicable.]
-- **Other AI tools:** [List each tool and its actual use, or write "None".]
+- **ChatGPT (OpenAI)** 
+- **Antigravity IDE** 
 
 The student developers remain responsible for the submitted code, implementation decisions, testing, and technical explanations. Both student members should be able to explain the project's architecture, risk rules, scoring logic, and limitations.
 
@@ -287,6 +287,7 @@ Potential future improvements include Bangla OCR, authenticated multi-user acces
 ## 12. Demo & Submission Links
 
 - **GitHub Repository:** https://github.com/wasifatin/landsentry-landtech-2026
+- **Sample Documents:** [https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing](https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing)
 - **Live Demo:** [Add the public HTTPS deployment URL, if available]
 - **Demo Video (maximum 3 minutes):** https://youtu.be/rCt7hB3wqVk
 - **Concept Note (PDF, maximum 4 pages):** [Add the repository path or link]
