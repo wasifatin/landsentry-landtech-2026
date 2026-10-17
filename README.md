@@ -288,12 +288,11 @@ Potential future improvements include Bangla OCR, authenticated multi-user acces
 
 - **GitHub Repository:** https://github.com/wasifatin/landsentry-landtech-2026
 - **Sample Documents:** [https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing](https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing)
-- **Live Demo:** [Add the public HTTPS deployment URL, if available]
+- **Live Demo:** [Add the public HTTPS deployment URL, if available
 - **Demo Video (maximum 3 minutes):** https://youtu.be/rCt7hB3wqVk
-- **Concept Note (PDF, maximum 4 pages):** [Add the repository path or link]
+- **Concept Note (PDF, maximum 4 pages):** https://drive.google.com/file/d/1P040ITRUv-OvSJV8vtP6htcn7PTLByWh/view?usp=sharing
 - **Hackathon:** LandTech 2026 — Daffodil International University
 
-A live deployment is recommended by the rulebook but is not mandatory for Round 1. The concept note and demo video are separate submission deliverables.
 
 ## 13. Team & Mentors
 
