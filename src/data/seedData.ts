@@ -18,7 +18,7 @@ export const INITIAL_SETTINGS: DetectionSettings = {
   weightRegMutationMismatch: 20,
   weightRapidTransfer: 15,
   weightMissingFields: 10,
-  currentReviewerRole: 'Demo Sub-Registrar',
+  currentReviewerRole: 'Sub-Registrar',
   reviewerAlias: 'REVIEWER-SYN-OFFICER-01'
 };
 
