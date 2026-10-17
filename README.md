@@ -288,7 +288,7 @@ Potential future improvements include Bangla OCR, authenticated multi-user acces
 
 - **GitHub Repository:** https://github.com/wasifatin/landsentry-landtech-2026
 - **Live Demo:** [Add the public HTTPS deployment URL, if available]
-- **Demo Video (maximum 3 minutes):** [Add the video link]
+- **Demo Video (maximum 3 minutes):** https://youtu.be/rCt7hB3wqVk
 - **Concept Note (PDF, maximum 4 pages):** [Add the repository path or link]
 - **Hackathon:** LandTech 2026 — Daffodil International University
 
