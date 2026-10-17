@@ -1,8 +1,8 @@
 /**
  * JomiGuard AI — Data & Type Definitions
  * Track: Digital Land Records, Verification & Digitization
- * Problem: P3 — Land Fraud & Double-Selling Detection
- * Compliance: Synthetic demo records only; non-authoritative triage engine.
+ * Domain: Land Fraud & Double-Selling Detection
+ * Compliance: Non-authoritative deterministic triage engine.
  */
 
 export type SurveyGeneration = 'CS' | 'SA' | 'RS' | 'BS';
@@ -145,6 +145,6 @@ export interface DetectionSettings {
   weightRegMutationMismatch: number;
   weightRapidTransfer: number;
   weightMissingFields: number;
-  currentReviewerRole: 'Demo Sub-Registrar' | 'Demo AC Land Officer' | 'Demo Land Auditor';
+  currentReviewerRole: 'Sub-Registrar' | 'AC Land Officer' | 'Land Auditor';
   reviewerAlias: string;
 }

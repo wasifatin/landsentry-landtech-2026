@@ -1,197 +1,344 @@
-# 🛡️ JomiGuard AI — Land Fraud & Double-Selling Detection System
+# 🛡️ LandSentry — Every Transfer Under Watch
 
-**Hackathon:** LandTech 2026  
+**An Explainable Land Fraud & Double-Selling Detection System**
+
+**Event:** LandTech 2026 — LandTech Innovation Hackathon  
 **Track:** Digital Land Records, Verification & Digitization  
 **Selected Problem:** P3 — Fraud & Double-Selling Detection  
-**Role & Status:** Advisory Triage & Human Review Demonstrator (Prototype v1.0.0)
+**Project Status:** Working Prototype — Round 1  
+**Version:** 1.0.0
 
 ---
 
-> [!IMPORTANT]
-> ### 🛑 Critical Compliance & Demonstration Notice
-> **DEMO ONLY — Self-Generated Synthetic Records Only.**  
-> - JomiGuard AI is **NOT** an official government land registry, a legal ownership oracle, or a fraud adjudication court.
-> - **Never treats a risk score or hash match as legal proof of title or guilt.** The system generates rule-based advisory triage signals to prioritize human review by authorized officers (Sub-Registrars and Assistant Commissioners of Land).
-> - **Zero Genuine Personal Data:** All names, IDs, phone numbers, and addresses in this application are fictional demonstration aliases (e.g., `PERSON-SYN-001`, `BUYER-SYN-004`).
-> - **Zero Live Government Connection:** No scraping, automated queries, or connections to any live government or third-party land portals exist. All processing is confined to this local prototype.
+## 1. Project Overview
 
----
+LandSentry is a browser-based land-record verification and risk-triage prototype designed to help identify suspicious land transactions and inconsistencies in land records in Bangladesh.
 
-## 📌 Problem Context & Bangladesh Land Administration Reality
+Land-related fraud can involve multiple registered deeds for the same parcel, altered document copies, suspiciously rapid ownership transfers, and discrepancies between Sub-Registry registration records and AC Land mutation records.
 
-In Bangladesh's land administration system, property record management has historically suffered from structural bottlenecks:
-1. **Institutional Separation (The Sub-Registry vs. AC Land Chasm):**
-   - **Deed Registration** is administered by the Directorate of Registration under the **Ministry of Law, Justice and Parliamentary Affairs**.
-   - **Mutation (Namzari) & Record-of-Rights (Khatian)** maintenance is administered by the Upazila Land Office under the **Ministry of Land**.
-   - Because these two systems historically operated in physical silos without atomic, synchronized ledger verification, bad actors exploit the delay between deed registration and mutation to sell the same plot multiple times to different buyers (**Double-Selling**).
-2. **Multi-Generational Cadastral Surveys:**
-   - Plots transition across historical survey generations: **CS** (Cadastral Survey, ~1920) ➔ **SA** (State Acquisition, ~1962) ➔ **RS** (Revisional Survey, ~1988) ➔ **BS/City Survey** (~2015).
-   - Plot/Dag numbers split, merge, and vary across generations. Discrepancies often emerge from legitimate partitions, but can also be manipulated using forged paper deeds.
-3. **Forged & Altered Scanned Deeds:**
-   - Physical deed copies presented for mutation frequently contain altered consideration amounts, tampered boundaries, or modified recipient names.
-4. **Rapid Succession Transfer Velocity (Chain Flipping):**
-   - Fraudulent syndicates execute rapid back-to-back sales through dummy intermediaries before original owners or heirs discover the breach.
+LandSentry brings these checks together in one interface. It evaluates synthetic land-record data, generates an explainable risk score, presents the evidence behind each alert, and supports human review through a case-management workflow.
 
-**JomiGuard AI** directly addresses Problem **P3** by providing an automated, deterministic triage engine that detects:
-- Suspicious/forged or altered document copies using browser Web Crypto SHA-256 fingerprinting.
-- The same synthetic parcel key associated with unresolved sales to multiple distinct buyer aliases.
-- Suspiciously rapid succession transfers within configurable velocity windows.
-- Field-level discrepancies between Sub-Registry deed registration and AC Land mutation records.
+**Our goal is not to replace government authorities or make legal ownership decisions. Our goal is to help reviewers identify records that may require further verification.**
 
----
+## 2. Problem Statement
 
-## 🌟 Key Features
+**P3 — Fraud & Double-Selling Detection**
 
-| Module | Purpose & Implementation |
-| :--- | :--- |
-| **Overview Dashboard** | Real-time KPI bento grid (parcels indexed, deeds registered, open alerts, high-risk cases), recent alerts triage queue, active policy switches, and immutable local audit trail. |
-| **Parcel & Record Explorer** | Search and filter synthetic parcels by mouza, dag, and survey era. Visualizes generational lineages (CS ➔ SA ➔ RS ➔ BS) and explains survey variances as reconciliation evidence. |
-| **Document Cryptographic Fingerprinting** | Computes SHA-256 digital hashes using the native browser **Web Crypto API**. Compares live document text to authorized Sub-Registry reference copies; includes deterministic tamper simulation and rollback. |
-| **Double-Selling Detector** | Identifies overlapping, uncancelled registered deeds linked to the same canonical synthetic parcel key across distinct buyer aliases. Provides clear evidence tables and explains legitimate false-positive possibilities. |
-| **Rapid Transfer Velocity Analyzer** | Chronological ownership timeline with **interactive configurable demo thresholds** (default: 3 transfers in 90 days). Changing sliders immediately updates triggered alerts in real-time. |
-| **Registration vs. Mutation Reconciliation** | Side-by-side field comparison (Buyer Alias, Declared Area, Deed Reference, Status) between Sub-Registry and AC Land records with mismatch indicators. |
-| **Case & Review Management** | Advisory triage scoring (0–100), rule-by-rule weight breakdown (+40, +25, +20, +15, +10), status transitions, reviewer notes, and simulated role switching (`Sub-Registrar`, `AC Land Officer`, `Auditor`). |
-| **Data Export & Scenario Quick-Loader** | 1-click loading for Scenarios A–F, pristine factory reset, and JSON/CSV export of synthetic records with mandatory disclaimers. |
+LandSentry addresses the challenge of detecting:
 
----
+- Possible double-selling of the same land parcel to different buyers.
+- Document alterations identified through cryptographic hash comparison.
+- Suspiciously rapid sequences of ownership transfers.
+- Inconsistencies between Sub-Registry deed records and AC Land mutation records.
+- Missing or inconsistent information across historical survey records.
 
-## 🎨 Design System: "Industrial Enterprise Dark"
+The project is designed around the Bangladesh land administration context, including the relationship between registered deeds, khatian/porcha records, mutation records, and historical survey generations such as CS, SA, RS, and BS.
 
-- **Palette:** Deep Black background (`#000000`), elevated surfaces in Zinc Grays (`#0f0f0f`, `#1a1a1a`, `#262626`).
-- **Accent:** Bold Gold (`#fac306`) with glowing focal effects (`rgba(250, 195, 6, 0.2)`).
-- **Status Accents:** Emerald (`#10b981`), Red (`#ef4444`), and Blue (`#3b82f6`).
-- **Typography:** Modern clean sans-serif for UI hierarchy and `JetBrains Mono` for all technical parcel keys, hashes, deed IDs, and timestamps.
-- **Glassmorphic Panels:** `rgba(15, 15, 15, 0.75)` with `14px` blur and micro-animations.
+## 3. Key Features
 
----
+### Risk Monitoring Dashboard
 
-## ⚙️ Deterministic Risk Engine & Transparent Weights
+- Displays parcel and deed statistics.
+- Highlights open alerts and high-risk cases.
+- Provides recent alerts and a local audit trail.
 
-JomiGuard AI avoids black-box opacity. All risk scoring is completely deterministic, explainable, and testable:
+### Parcel & Record Explorer
 
-$$\text{Triage Score} = \min\left(100, \sum \text{Triggered Rule Weights}\right)$$
+- Searches and filters synthetic land parcels.
+- Presents historical survey information across CS, SA, RS, and BS.
+- Highlights relevant record inconsistencies for review.
 
-| Rule ID | Weight | Trigger Criteria |
-| :--- | :---: | :--- |
-| `DOUBLE_SELLING` | **+40** | Same canonical synthetic parcel key has multiple active registered deeds with distinct buyer aliases. |
-| `DOCUMENT_INTEGRITY` | **+25** | Observed SHA-256 hash diverges from authorized Sub-Registry reference archive fingerprint. |
-| `REG_MUTATION_MISMATCH` | **+20** | Conflicting buyer alias, area mismatch (>0.01 dec), or mutation caveat objection between registers. |
-| `RAPID_TRANSFER` | **+15** | Parcel undergoes $\ge N$ transfers within $D$ calendar days (Configurable prototype default: 3 in 90 days). |
-| `MISSING_FIELDS` | **+10** | Unlinked cadastral khatian or significant unexplained area drift across CS/BS survey generations. |
+### Document Integrity Verification
 
-### Severity Bands
-- **0 – 29: Low Severity** (Satisfactory baseline, routine monitoring)
-- **30 – 59: Medium Severity** (Discrepancy flagged; schedule administrative verification)
-- **60 – 100: High Severity** (Immediate joint Sub-Registrar / AC Land review required)
+- Computes SHA-256 fingerprints using the browser's Web Crypto API.
+- Compares observed document fingerprints with stored reference fingerprints.
+- Demonstrates document-tampering detection using controlled prototype scenarios.
 
----
+### Double-Selling Detection
 
-## 🧪 Seed Demonstration Scenarios (A through F)
+- Identifies multiple active registered deeds associated with the same synthetic parcel key and different buyer aliases.
+- Displays the records that triggered the alert.
 
-| Scenario | Synthetic Parcel Key | Condition | Expected Score & Severity |
-| :--- | :--- | :--- | :--- |
-| **A: Clean Baseline** | `PARCEL-SYN-DH-001` | Single sale, reference hash matches, registration and mutation records agree. | **0 / 100 (LOW)** |
-| **B: Double-Selling** | `PARCEL-SYN-DH-002` | Registered deeds `DEED-SYN-2026-089` and `DEED-SYN-2026-104` to distinct buyers by same seller. | **60 / 100 (HIGH)** |
-| **C: Altered Document** | `PARCEL-SYN-DH-003` | Deed `DOC-SYN-002` area altered from 10.0 to 18.0 decimals; SHA-256 diverges. | **35 / 100 (MEDIUM)** |
-| **D: Rapid Sequence** | `PARCEL-SYN-DH-004` | 3 successive transfers inside 42 days (`SELLER-SYN-004` ➔ `BUYER-005` ➔ `006` ➔ `007`). | **35 / 100 (MEDIUM)** |
-| **E: Reg/Mut Mismatch** | `PARCEL-SYN-DH-005` | Sub-Registry records 20.0 dec vs AC Land records 14.5 dec; buyer aliases conflict. | **30 / 100 (MEDIUM)** |
-| **F: Missing Record** | `PARCEL-SYN-DH-006` | Registered deed present, but mutation file absent from demo dataset. | **30 / 100 (MEDIUM)** |
+### Rapid Transfer Analysis
 
----
+- Analyzes ownership-transfer timelines.
+- Supports configurable transfer-count and time-window thresholds.
+- Uses three transfers within 90 days as the default prototype threshold.
 
-## 🚀 Installation & Run Guide
+### Registration–Mutation Reconciliation
 
-The prototype is engineered for **instant execution** with zero mandatory external API keys or cloud dependencies.
+- Compares relevant Sub-Registry and AC Land records.
+- Flags buyer-alias conflicts, area discrepancies, missing mutation records, and recorded objections.
 
-### Option 1: Standalone Zero-Build Run (Recommended for Instant Evaluation)
-Run Python's built-in HTTP server from the project directory:
+### Explainable Risk Scoring
+
+- Assigns weighted scores to triggered rules.
+- Shows the evidence associated with each triggered rule.
+- Categorizes cases into Low, Medium, and High severity.
+
+### Case Review & Audit
+
+- Supports case-status updates and reviewer notes.
+- Provides simulated reviewer roles.
+- Maintains a browser-local audit trail of supported actions.
+
+### Data Export & Demonstration Scenarios
+
+- Loads predefined synthetic demonstration scenarios.
+- Supports JSON and CSV exports of supported records.
+- Includes a reset option for restoring the demonstration dataset.
+
+### Bilingual Interface
+
+- Provides English and Bangla interface translations.
+- Includes light and dark visual themes.
+
+## 4. Explainable Risk Assessment
+
+LandSentry uses a deterministic, rule-based risk engine rather than a trained machine-learning model.
+
+The total score is calculated as:
+
+`Risk Score = min(100, sum of triggered rule weights)`
+
+| Detection rule                    | Weight |
+| --------------------------------- | -----: |
+| Possible double-selling           |    +40 |
+| Document integrity mismatch       |    +25 |
+| Registration–mutation discrepancy |    +20 |
+| Rapid succession transfers        |    +15 |
+| Missing or inconsistent fields    |    +10 |
+
+### Severity Classification
+
+| Score  | Severity | Suggested action                        |
+| ------ | -------- | --------------------------------------- |
+| 0–29   | Low      | Routine monitoring                      |
+| 30–59  | Medium   | Further administrative verification     |
+| 60–100 | High     | Priority review by relevant authorities |
+
+The scoring thresholds and weights are prototype settings, not official government standards. A high score indicates that a case warrants closer review; it does not prove fraud, forgery, or legal ownership.
+
+## 5. How It Works
+
+1. **Record intake:** The reviewer works with supported documents and the prototype's available record data.
+2. **File validation:** Supported uploaded files undergo extension, size, and file-signature checks.
+3. **Integrity checking:** The application computes a SHA-256 fingerprint where supported.
+4. **Rule evaluation:** The risk engine checks for double-selling, integrity mismatches, rapid transfers, registration–mutation discrepancies, and missing or inconsistent fields.
+5. **Risk scoring:** Triggered rule weights are combined into a score capped at 100.
+6. **Human review:** The reviewer examines the evidence, updates the case status, and records notes where supported.
+
+The current PDF text-extraction workflow processes text-based PDFs. Image-only scanned PDFs without an extractable text layer are not supported by the current extraction implementation.
+
+## 6. Technology Stack
+
+- **Frontend:** React
+- **Programming Language:** JavaScript and TypeScript
+- **Build Tool:** Vite
+- **Cryptographic Fingerprinting:** Browser Web Crypto API (SHA-256)
+- **Document Processing:** Browser-based PDF text extraction with a built-in reader and PDF.js fallback
+- **Data Storage:** Browser-local storage
+- **Icons:** Lucide React
+- **Testing:** Node.js acceptance-test script
+- **Version Control:** Git and GitHub
+
+The prototype performs its core risk evaluation locally in the browser. PDF.js may be loaded from a CDN when the built-in PDF reader cannot extract the required text, so that fallback requires network access.
+
+## 7. Getting Started
+
+### Prerequisites
+
+Install:
+
+- Node.js with npm.
+- Git, if you plan to clone and contribute to the repository.
+- A modern web browser.
+
+### Installation
+
+Clone the repository:
+
 ```bash
-# From workspace root:
-python -m http.server 5173
+git clone https://github.com/wasifatin/landsentry-landtech-2026.git
 ```
-Then open your browser at:
-```
-http://localhost:5173
-```
-*(You can also double-click `index.html` directly in modern browsers supporting local ES modules).*
 
-### Option 2: Node.js / Vite Toolchain (Developer Mode)
-If Node.js and npm are installed on your machine:
+Open the project directory:
+
 ```bash
-# 1. Install dependencies
+cd landsentry-landtech-2026
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
 
-# 2. Run local development server
+Start the development server:
+
+```bash
 npm run dev
+```
 
-# 3. Run production build
+Open the local URL printed by Vite in your terminal, commonly:
+
+`http://localhost:5173`
+
+### Build and Test
+
+Create a production build:
+
+```bash
 npm run build
 ```
 
-### Running Automated Acceptance Tests
-To execute the automated test suite verifying all 10 acceptance criteria:
+Run the available acceptance tests:
+
 ```bash
-node tests/acceptance_tests.js
+npm test
 ```
-*(Or run with any standard node executable: `& "C:\Program Files\Adobe\Adobe Creative Cloud Experience\libs\node.exe" tests/acceptance_tests.js`).*
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+Run these commands from the directory containing `package.json`. A successful build or test run should be verified in your own environment before reporting it as successful.
+
+## 8. Repository Structure
+
+```text
+landsentry-landtech-2026/
+├── public/
+│   └── assets/
+├── src/
+│   ├── assets/
+│   ├── data/
+│   │   └── seedData.js
+│   ├── i18n/
+│   │   └── translations.js
+│   ├── repository/
+│   │   ├── fileValidator.js
+│   │   ├── pdfIngest.js
+│   │   └── storage.js
+│   ├── rules/
+│   │   └── riskEngine.js
+│   ├── types/
+│   │   └── index.ts
+│   ├── app.js
+│   ├── signin.js
+│   └── index.css
+├── tests/
+│   └── acceptance_tests.js
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── .gitignore
+└── README.md
+```
+
+This structure describes the main files in the current prototype; minor differences may exist in the final repository.
+
+## 9. Data Sources, Privacy & Security
+
+LandSentry follows the LandTech 2026 Rule Book's data and security requirements.
+
+- The demonstration dataset uses synthetic, fictional records created for the prototype.
+- The application must not be used to collect, display, or process real individuals' personal information or actual private land records for this hackathon.
+- No scraping, automated querying, or bulk downloading from government portals is performed.
+- The prototype does not connect to live government land-record systems.
+- Hash comparisons use stored reference fingerprints and are demonstrated with controlled test scenarios.
+- Browser-local processing is used for the core risk evaluation; uploaded information is not intentionally sent to a LandSentry backend.
+- Browser storage is not equivalent to a secure production database and must not be treated as one.
+
+**Data source:** Self-generated synthetic demonstration data included in the project source code. No live government database or private real-world land-record dataset is used.
+
+Any external library or asset included in the project should be credited below with its source and applicable licence.
+
+## 10. AI Tool Disclosure
+
+LandSentry's implemented risk engine is deterministic and rule-based. It does not use a trained machine-learning model to produce its risk scores.
+
+AI tools used during development must be disclosed accurately. Complete the following list with every tool actually used by the team:
+
+- **ChatGPT (OpenAI):** [Describe the actual use, such as planning, documentation, code explanation, debugging assistance, or review, only where applicable.]
+- **Other AI tools:** [List each tool and its actual use, or write "None".]
+
+The student developers remain responsible for the submitted code, implementation decisions, testing, and technical explanations. Both student members should be able to explain the project's architecture, risk rules, scoring logic, and limitations.
+
+## 11. Limitations & Future Improvements
+
+The current version is a demonstration prototype, not a production-ready government platform.
+
+Known limitations include:
+
+- Risk scores are generated by predefined rules and weights rather than a trained fraud-detection model.
+- PDF text extraction does not support image-only scanned PDFs without a text layer.
+- Reference fingerprint matching is meaningful only when a trusted reference fingerprint is available.
+- The application uses synthetic records and does not verify ownership against live official registries.
+- Browser-local storage is not designed for secure multi-user production workflows.
+- Role switching and review workflows are prototype simulations, not verified government authentication or authorization.
+- A hash match confirms byte-level consistency with a reference, not the authenticity or legal validity of the underlying document.
+
+Potential future improvements include Bangla OCR, authenticated multi-user access, secure server-side audit records, authorized registry integration, and additional validation workflows, subject to legal authorization and privacy safeguards.
+
+## 12. Demo & Submission Links
+
+- **GitHub Repository:** https://github.com/wasifatin/landsentry-landtech-2026
+- **Live Demo:** [Add the public HTTPS deployment URL, if available]
+- **Demo Video (maximum 3 minutes):** [Add the video link]
+- **Concept Note (PDF, maximum 4 pages):** [Add the repository path or link]
+- **Hackathon:** LandTech 2026 — Daffodil International University
+
+A live deployment is recommended by the rulebook but is not mandatory for Round 1. The concept note and demo video are separate submission deliverables.
+
+## 13. Team & Mentors
+
+- **Team Name:** [Enter registered team name]
+- **Student 1 / Team Leader:** [Full name]
+- **Student 2:** [Full name]
+- **Faculty Mentor:** [Full name]
+- **Industry Mentor:** [Full name]
+
+Only include verified team and mentor details matching the team's official registration.
+
+## 14. Development History & Round Updates
+
+This repository retains its Git commit history to support transparency and authorship review.
+
+### Round 1 — Initial Submission
+
+- Initial LandSentry prototype and synthetic demonstration scenarios.
+- Explainable rule-based risk assessment.
+- Document integrity verification and record-reconciliation workflows.
+- Project documentation and setup instructions.
+
+### Changes After Round 1
+
+Update this section before the Final Round with a factual summary of all changes made after the Round 1 submission, including new features, fixes, tests, design changes, and deployment updates.
+
+**No post-Round-1 changes are claimed here until they have actually been made.**
+
+## 15. Third-Party Credits & Licensing
+
+- React: https://react.dev/
+- Vite: https://vite.dev/
+- Lucide React: https://lucide.dev/
+- PDF.js: https://mozilla.github.io/pdf.js/
+
+The project uses the dependencies declared in `package.json`. Refer to each dependency's official licence and include any additional third-party assets or libraries used in the finished repository.
+
+**Project licence:** [Choose and add a licence only after the team has decided how the project will be licensed.]
+
+## 16. Disclaimer
+
+LandSentry is an educational and hackathon demonstration prototype. It is not an official government land registry, legal ownership verification service, or fraud adjudication system.
+
+Risk indicators are advisory signals for further investigation. They must not be treated as proof of fraud, forgery, guilt, or legal title. Any real-world deployment would require appropriate legal review, security controls, verified data, and authorization from relevant authorities.
 
 ---
 
-## 🤖 AI Tools Disclosure
-
-*In compliance with the LandTech 2026 Rule Book Section on AI Assistance, the team declares the following tool usage. Team members must review and maintain truthful disclosures.*
-
-- **Google Gemini / Antigravity IDE:** Utilized for scaffolding initial TypeScript models, synthesizing realistic demonstration dataset schemas (`seedData.ts`), crafting Industrial Enterprise Dark CSS styling, and generating the automated acceptance test script.
-- **ChatGPT (OpenAI):** Utilized during initial project ideation for PRD refinement, problem analysis against Bangladesh land laws (Registration Act 1908 & State Acquisition and Tenancy Act 1950), and structuring the rule-weight formulas.
-- **Student Authorship Confirmation:** Both student team members have reviewed, understood, and tested all project code and detection rules, and are fully prepared to explain all architecture, code logic, and design decisions during the live evaluation.
-
----
-
-## 👥 Team Composition & Hackathon Alignment
-
-Per the LandTech 2026 rule book specifications, the permitted 4-person team structure comprises:
-- **Team Leader (Student / Alumni 1):** Lead Full-Stack Development & Architecture
-- **Member (Student / Alumni 2):** UI/UX Design, Risk Engine Logic & Data Synthesis
-- **Faculty Mentor:** Academic Guidance, Research Rigor & Methodology Review
-- **Industry Mentor:** Domain Expertise in Bangladesh Land Governance & GovTech Systems
-
-*(Final team roster, DIU student IDs, and mentor contact records must be confirmed directly with hackathon organizers).*
-
----
-
-## 📦 Open-Source Dependencies & Licenses
-
-All libraries used are open-source with permissive licenses:
-- **React (v18.2.0):** MIT License (Facebook / Meta)
-- **React-DOM (v18.2.0):** MIT License (Facebook / Meta)
-- **Lucide Icons (v0.344.0):** ISC License (Lucide Project)
-- **Vite (v5.1.6):** MIT License (Evan You & Vite Contributors)
-- **TypeScript (v5.2.2):** Apache License 2.0 (Microsoft)
-- **Google Fonts (Inter & JetBrains Mono):** SIL Open Font License 1.1
-
----
-
-## 📋 Hackathon Round 1 & Final Round Checklist
-
-- [x] **Problem Focus:** Specifically targeted to **P3 — Fraud & Double-Selling Detection**.
-- [x] **Synthetic Data Compliance:** 100% self-generated dummy aliases; zero real citizen data.
-- [x] **Offline Sandbox:** Zero unauthorized requests to live government portals.
-- [x] **Browser Web Crypto SHA-256:** Cryptographic integrity check implemented with fallback.
-- [x] **Configurable Rapid Transfer Threshold:** User can modify count and days to observe live trigger reactivity.
-- [x] **Multi-Registry Reconciliation:** Field-by-field Sub-Registry vs AC Land comparison.
-- [x] **Local Persistence & Audit Trail:** LocalStorage persistence, status updater, note appender, and audit log.
-- [x] **All 10 Acceptance Criteria Passed:** Verified via automated test suite.
-
-### Changes Since Round 1 (Placeholder for Final Round)
-*To be completed by the student team prior to the Final Round submission:*
-1. *Initial concept submission: 16 October 2026.*
-2. *Expanded survey generational cross-referencing (CS/SA/RS/BS).*
-3. *Refined deterministic scoring weights based on mentor feedback.*
-4. *Prepared 10-slide pitch deck and 3-minute demonstration video.*
-
----
-
-## ⚖️ Legal & Governance Limitations
-1. **Advisory Triage Only:** JomiGuard AI is a prioritization dashboard designed to assist authorized public servants. It does not replace the statutory authority of a Sub-Registrar under the *Registration Act, 1908* or an Assistant Commissioner (Land) under the *State Acquisition and Tenancy Act, 1950*.
-2. **Cryptographic Hashes vs Legal Validity:** SHA-256 verifies digital bitstream consistency against an initial intake copy; it does not adjudicate legal execution or physical possession.
-3. **No Nationwide Production Claim:** This application is submitted as an academic and hackathon technology prototype. Any production deployment requires formal integration with the Ministry of Land's e-Mutation system and the Directorate of Registration's deed database under authorized government security mandates.
+**LandSentry — Every Transfer Under Watch**  
+_Supporting transparent, explainable, and responsible land-record review in Bangladesh._

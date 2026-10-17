@@ -36,7 +36,7 @@ function assert(condition, message) {
 
 console.log('\n======================================================================');
 console.log('🏛️  JOMIGUARD AI — PRD SCENARIO & ACCEPTANCE TEST SUITE');
-console.log('    LandTech 2026 Hackathon | Problem P3: Fraud & Double-Selling');
+console.log('    LandTech 2026 Hackathon | Fraud & Double-Selling Detection');
 console.log('======================================================================\n');
 
 const repo = new LandRepository();

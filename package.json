@@ -2,7 +2,7 @@
   "name": "jomiguard-ai",
   "version": "1.0.0",
   "private": true,
-  "description": "JomiGuard AI — Land Fraud & Double-Selling Detection System for LandTech 2026 Hackathon (Track: Digital Land Records, Verification & Digitization | Problem P3)",
+  "description": "LandSentry — Land Fraud & Double-Selling Detection System for LandTech 2026 Hackathon (Track: Digital Land Records, Verification & Digitization)",
   "type": "module",
   "scripts": {
     "dev": "vite",
