@@ -288,7 +288,7 @@ Potential future improvements include Bangla OCR, authenticated multi-user acces
 
 - **GitHub Repository:** https://github.com/wasifatin/landsentry-landtech-2026
 - **Sample Documents:** [https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing](https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing)
-- **Live Demo:** landsentry-codeinfernox.vercel.app
+- **Live Demo:** https://landsentry-codeinfernox.vercel.app/
 - **Demo Video:** https://youtu.be/rCt7hB3wqVk
 - **Concept Note:** https://drive.google.com/file/d/1P040ITRUv-OvSJV8vtP6htcn7PTLByWh/view?usp=sharing
 - **Hackathon:** LandTech 2026 — Daffodil International University
