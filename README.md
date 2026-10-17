@@ -317,7 +317,6 @@ This repository retains its Git commit history to support transparency and autho
 
 ### Changes After Round 1
 
-Update this section before the Final Round with a factual summary of all changes made after the Round 1 submission, including new features, fixes, tests, design changes, and deployment updates.
 
 **No post-Round-1 changes are claimed here until they have actually been made.**
 
