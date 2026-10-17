@@ -296,13 +296,13 @@ A live deployment is recommended by the rulebook but is not mandatory for Round 
 
 ## 13. Team & Mentors
 
-- **Team Name:** [Enter registered team name]
-- **Student 1 / Team Leader:** [Full name]
-- **Student 2:** [Full name]
-- **Faculty Mentor:** [Full name]
-- **Industry Mentor:** [Full name]
+- **Team Name:** Code Inferno X
+- **Student 1 / Team Leader:** Fatin Sharhad
+- **Student 2:** Md. Tanvir Hossain
+- **Faculty Mentor:** Md. Abdullah-Al-Kafi
+- **Industry Mentor:** Farvez Rakib
 
-Only include verified team and mentor details matching the team's official registration.
+
 
 ## 14. Development History & Round Updates
 
@@ -330,7 +330,15 @@ Update this section before the Final Round with a factual summary of all changes
 
 The project uses the dependencies declared in `package.json`. Refer to each dependency's official licence and include any additional third-party assets or libraries used in the finished repository.
 
-**Project licence:** [Choose and add a licence only after the team has decided how the project will be licensed.]
+**Project licence:** MIT License
+
+Copyright (c) 2026 Team Code Inferno
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## 16. Disclaimer
 
