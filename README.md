@@ -267,7 +267,10 @@ AI tools used during development must be disclosed accurately. Complete the foll
 - **Antigravity IDE** 
 
 The student developers remain responsible for the submitted code, implementation decisions, testing, and technical explanations. Both student members should be able to explain the project's architecture, risk rules, scoring logic, and limitations.
-
+## Login Types
+- for Sub-Registrar (Username : sub_registrar, Password : 123456789)
+- for AC Land Officer (Username : ac_land_officer, Password : 123456789)
+- for Land Auditor (Username : land_auditor, Password : 123456789)
 ## 11. Limitations & Future Improvements
 
 The current version is a demonstration prototype, not a production-ready government platform.
