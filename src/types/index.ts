@@ -1,5 +1,5 @@
 /**
- * JomiGuard AI — Data & Type Definitions
+ * LandSentry — Data & Type Definitions
  * Track: Digital Land Records, Verification & Digitization
  * Domain: Land Fraud & Double-Selling Detection
  * Compliance: Non-authoritative deterministic triage engine.

@@ -1,5 +1,5 @@
 /**
- * JomiGuard AI — Internationalization Dictionary (English & Bengali / বাংলা)
+ * LandSentry — Internationalization Dictionary (English & Bengali / বাংলা)
  * Complete coverage of every UI string across all tabs, modals, tables, badges,
  * notices, and form elements — EXCEPT the intro animation logo text.
  */
@@ -231,7 +231,7 @@ export const TRANSLATIONS = {
     statusFieldLabel: 'Status:',
     falsePositiveTitle: 'False Positive Prevention & Administrative Context:',
     falsePositiveBody: 'Under Bangladesh land practice, a parcel key may legitimately feature multiple deeds due to: (1) valid partition (Bonton-nama) among legal heirs, (2) partial conveyance of a sub-plot (e.g. 5 decimals out of 15.5 decimals), or (3) registered deeds of cancellation/rectification (Bhul-shongshodhoni).',
-    falsePositiveAction: 'Therefore, JomiGuard AI flags these cases for triaged human review by the Sub-Registrar and AC (Land) to examine parent deeds and possession, rather than auto-voiding transactions.',
+    falsePositiveAction: 'Therefore, LandSentry flags these cases for triaged human review by the Sub-Registrar and AC (Land) to examine parent deeds and possession, rather than auto-voiding transactions.',
 
     // ─── RAPID TRANSFERS ───
     rapidTransfersTitle: 'Rapid Succession Transfer (Velocity) Detector',
@@ -408,7 +408,7 @@ export const TRANSLATIONS = {
     footerRulesEngine: 'RULES ENGINE: ACTIVE (DETERMINISTIC)',
     footerWebCrypto: 'WEB CRYPTO SHA-256: READY',
     footerSandbox: 'ISOLATED SANDBOX: 0 EXTERNAL CALLS',
-    footerBrand: 'জমিGUARD AI v1.0.0 • SYNTHETIC DEMO ONLY • NOT AN OFFICIAL REGISTRY OR LEGAL ADJUDICATION',
+    footerBrand: 'LANDSENTRY v1.0.0 • SYNTHETIC DEMO ONLY • NOT AN OFFICIAL REGISTRY OR LEGAL ADJUDICATION',
 
     // ─── TOPBAR BADGE ───
     introBtnLabel: 'Intro',
@@ -640,7 +640,7 @@ export const TRANSLATIONS = {
     statusFieldLabel: 'অবস্থা:',
     falsePositiveTitle: 'মিথ্যা পজিটিভ প্রতিরোধ ও প্রশাসনিক প্রেক্ষাপট:',
     falsePositiveBody: 'বাংলাদেশের ভূমি প্রচলনে, একটি পার্সেল কী-তে বৈধভাবে একাধিক দলিল থাকতে পারে: (১) আইনি উত্তরাধিকারীদের মধ্যে বৈধ বণ্টননামা, (২) একটি সাব-প্লটের আংশিক হস্তান্তর (যেমন ১৫.৫ ডেসিমালের মধ্যে ৫ ডেসিমাল), অথবা (৩) বাতিল/সংশোধনের নিবন্ধিত দলিল (ভুল-সংশোধনী)।',
-    falsePositiveAction: 'অতএব, জমিGuard AI এই কেসগুলো সাব-রেজিস্ট্রার এবং এসি (ভূমি) দ্বারা মূল দলিল ও দখল পরীক্ষার জন্য বাছাইকৃত মানব পর্যালোচনার জন্য চিহ্নিত করে, স্বয়ংক্রিয়ভাবে লেনদেন বাতিল করে না।',
+    falsePositiveAction: 'অতএব, ল্যান্ডসেন্ট্রি (LandSentry) এই কেসগুলো সাব-রেজিস্ট্রার এবং এসি (ভূমি) দ্বারা মূল দলিল ও দখল পরীক্ষার জন্য বাছাইকৃত মানব পর্যালোচনার জন্য চিহ্নিত করে, স্বয়ংক্রিয়ভাবে লেনদেন বাতিল করে না।',
 
     // ─── দ্রুত হস্তান্তর ───
     rapidTransfersTitle: 'দ্রুত ধারাবাহিক হস্তান্তর (বেগ) শনাক্তকারী',
@@ -817,7 +817,7 @@ export const TRANSLATIONS = {
     footerRulesEngine: 'রুলস ইঞ্জিন: সক্রিয় (নিয়ম-নির্ধারিত)',
     footerWebCrypto: 'ওয়েব ক্রিপ্টো SHA-256: প্রস্তুত',
     footerSandbox: 'বিচ্ছিন্ন স্যান্ডবক্স: ০ বাহ্যিক কল',
-    footerBrand: 'জমিGUARD AI v1.0.0 • শুধুমাত্র কৃত্রিম ডেমো • কোনো সরকারি রেজিস্ট্রি বা আইনি বিচার নয়',
+    footerBrand: 'LANDSENTRY v1.0.0 • শুধুমাত্র কৃত্রিম ডেমো • কোনো সরকারি রেজিস্ট্রি বা আইনি বিচার নয়',
 
     // ─── টপবার ব্যাজ ───
     introBtnLabel: 'ইন্ট্রো',
@@ -828,7 +828,7 @@ let currentLang = 'en';
 
 export function getLanguage() {
   if (typeof window !== 'undefined' && window.localStorage) {
-    const saved = localStorage.getItem('jomiguard_lang');
+    const saved = localStorage.getItem('landsentry_lang');
     if (saved === 'bn' || saved === 'en') {
       currentLang = saved;
     }
@@ -840,7 +840,7 @@ export function setLanguage(lang) {
   if (lang === 'bn' || lang === 'en') {
     currentLang = lang;
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('jomiguard_lang', lang);
+      localStorage.setItem('landsentry_lang', lang);
     }
   }
 }

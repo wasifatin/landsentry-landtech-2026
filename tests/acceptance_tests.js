@@ -1,5 +1,5 @@
 /**
- * JomiGuard AI — PRD Compliance & Scenario Verification Test Suite
+ * LandSentry — PRD Compliance & Scenario Verification Test Suite
  * Validates PRD Section 8 (Required Scenarios A-F) & Section 13 (Acceptance Criteria AT-01 to AT-12)
  */
 
@@ -35,7 +35,7 @@ function assert(condition, message) {
 }
 
 console.log('\n======================================================================');
-console.log('🏛️  JOMIGUARD AI — PRD SCENARIO & ACCEPTANCE TEST SUITE');
+console.log('🏛️  LANDSENTRY — PRD SCENARIO & ACCEPTANCE TEST SUITE');
 console.log('    LandTech 2026 Hackathon | Fraud & Double-Selling Detection');
 console.log('======================================================================\n');
 

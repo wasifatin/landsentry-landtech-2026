@@ -1,5 +1,5 @@
 /**
- * JomiGuard AI — Repository & Persistence Layer (ES Module)
+ * LandSentry — Repository & Persistence Layer (ES Module)
  */
 
 import { 
@@ -15,7 +15,7 @@ import {
 } from '../data/seedData.js';
 import { evaluateParcelRisk } from '../rules/riskEngine.js';
 
-const STORAGE_KEY_PREFIX = 'jomiguard_';
+const STORAGE_KEY_PREFIX = 'landsentry_';
 
 export class LandRepository {
   constructor() {
@@ -556,7 +556,7 @@ export class LandRepository {
             severity: evaluation.severity,
             evidenceRefs: evaluation.evidenceRefs,
             status: 'New',
-            notes: 'Generated automatically by JomiGuard rule evaluation engine.',
+            notes: 'Generated automatically by LandSentry rule evaluation engine.',
             assignedReviewerAlias: this.settings.reviewerAlias,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),

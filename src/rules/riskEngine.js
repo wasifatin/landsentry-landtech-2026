@@ -1,5 +1,5 @@
 /**
- * JomiGuard AI — Deterministic Rules Engine (ES Module)
+ * LandSentry — Deterministic Rules Engine (ES Module)
  */
 
 export function calculateSeverity(score) {

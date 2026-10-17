@@ -2313,7 +2313,7 @@ window.appExportJson = function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `jomiguard_synthetic_records_${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `landsentry_synthetic_records_${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 };
@@ -2324,7 +2324,7 @@ window.appExportCsv = function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `jomiguard_synthetic_alerts_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `landsentry_synthetic_alerts_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 };
@@ -2721,7 +2721,7 @@ function toggleSidebar(forceState) {
   if (collapseToggleLabel) collapseToggleLabel.textContent = isSidebarCollapsed ? 'Maximize' : 'Minimize Sidebar';
 
   try {
-    localStorage.setItem('jomiguard_sidebar_collapsed', isSidebarCollapsed ? '1' : '0');
+    localStorage.setItem('landsentry_sidebar_collapsed', isSidebarCollapsed ? '1' : '0');
   } catch (e) {}
 }
 
@@ -2743,7 +2743,7 @@ function toggleTheme(targetTheme) {
   }
 
   try {
-    localStorage.setItem('jomiguard_theme', currentTheme);
+    localStorage.setItem('landsentry_theme', currentTheme);
   } catch (e) {}
 }
 
@@ -3094,10 +3094,10 @@ function initEvents() {
 
   // Load saved theme
   try {
-    const savedTheme = localStorage.getItem('jomiguard_theme') || 'dark';
+    const savedTheme = localStorage.getItem('landsentry_theme') || 'dark';
     toggleTheme(savedTheme);
 
-    const savedSidebar = localStorage.getItem('jomiguard_sidebar_collapsed');
+    const savedSidebar = localStorage.getItem('landsentry_sidebar_collapsed');
     if (savedSidebar === '1') {
       toggleSidebar(true);
     }
