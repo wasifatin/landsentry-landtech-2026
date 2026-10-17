@@ -4,8 +4,7 @@ import {
   RegistrationRecord, 
   MutationRecord, 
   DocumentFingerprint, 
-  TransferEvent, 
-  FraudAlert, 
+  TransferEvent,  
   TriggeredRule, 
   SeverityLevel,
   DetectionSettings 
