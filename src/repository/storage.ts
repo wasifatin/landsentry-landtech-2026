@@ -360,15 +360,7 @@ export class LandRepository {
  * Web Crypto SHA-256 calculation for synthetic content
  */
 export async function computeSha256(text: string): Promise<string> {
-  let subtle = (typeof window !== 'undefined' && window.crypto?.subtle) ||
-               (typeof globalThis !== 'undefined' && (globalThis as any).crypto?.subtle);
-
-  if (!subtle && typeof process !== 'undefined') {
-    try {
-      const nodeCrypto = await import('crypto');
-      subtle = (nodeCrypto as any).webcrypto?.subtle;
-    } catch (e) {}
-  }
+  const subtle: SubtleCrypto | undefined = globalThis.crypto?.subtle;
 
   if (subtle) {
     try {
