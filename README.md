@@ -293,6 +293,7 @@ Potential future improvements include Bangla OCR, authenticated multi-user acces
 - **Sample Documents:** [https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing](https://drive.google.com/drive/folders/1L5jcUGbdnSdoDqVrZSYfyJjhzVLw22xF?usp=sharing)
 - **Live Demo:** https://landsentry-codeinfernox.vercel.app/
 - **Demo Video:** https://youtu.be/rCt7hB3wqVk
+- **Slide Deck:** https://docs.google.com/presentation/d/1WVaP81iLJuFjCAZW0234BoIIzMyhJCIk/edit?usp=sharing&ouid=113184047444315886733&rtpof=true&sd=true
 - **Concept Note:** https://drive.google.com/file/d/1P040ITRUv-OvSJV8vtP6htcn7PTLByWh/view?usp=sharing
 - **Hackathon:** LandTech 2026 — Daffodil International University
 
